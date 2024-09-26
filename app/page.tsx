@@ -71,7 +71,8 @@ export default function Page() {
       <div className='flex flex-wrap p-4 gap-7' >
         
       {products?.map((product) => (
-        <div className="flex flex-col">
+
+        <div key={product._id} className="flex flex-col">
            <div className="p-4 w-[250px] bg-base-300 rounded-xl">
           <div className="h-[150px]">
             <Link href={`/product/${product._id}`}>
@@ -134,16 +135,8 @@ export default function Page() {
             </div>
             <p className="text-sm font-light opacity-70">{promo.description}</p>
             <h1 className="text-xl mt-2">Add to cart</h1>
-            {promo.countInStock !== 0 && (
-                <div className=" w-full my-2 justify-center ">
-                  <AddToCart
-                    item={{
-                      ...convertDocToObj(promo),
-                      qty: 0,
-                    }}
-                  />
-                </div>
-              )}
+            
+
           </div>
         </div>
         
@@ -153,5 +146,5 @@ export default function Page() {
     
     </div>
     
-  )
-}
+
+  )}
