@@ -135,7 +135,16 @@ export default function Page() {
             </div>
             <p className="text-sm font-light opacity-70">{promo.description}</p>
             <h1 className="text-xl mt-2">Add to cart</h1>
-            
+            {promo.countInStock !== 0 && (
+                <div className="card-actions w-full ml-[100px] justify-center ">
+                  <AddToCart
+                    item={{
+                      ...convertDocToObj(promo),
+                      qty: 0,
+                    }}
+                  />
+                </div>
+              )}
 
           </div>
         </div>
