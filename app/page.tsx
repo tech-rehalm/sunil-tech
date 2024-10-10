@@ -89,11 +89,10 @@ export default function Page() {
           </div>
           <p className="text-sm opacity-60">{product.description.substring(0, 50)}...</p>
 
-          <div className="flex items-center text-lg justify-between my-2">
+          <div className="flex items-center text-lg justify-between my-2 w-[120px]">
             <p className="text-lg opacity-70">Price</p>
             <p className="text-sm  bg-yellow-500 p-1 rounded-lg text-slate-950 w-[50px] text-center">$ {product.price}</p>
           </div>
-
         </div>
         </div>
        
