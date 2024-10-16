@@ -4,7 +4,7 @@ import { OrderItem } from '@/models/OrderModel'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import toast from 'react-hot-toast'
+import {toast} from 'react-toastify'
 import { useState, useEffect } from 'react'
 import useSWRMutation from 'swr/mutation'
 
@@ -15,7 +15,21 @@ export default function OrderDetails({
   orderId: string
   paypalClientId: string
 }) {
-  console.log(orderId)
+
+  const fetchOrderData = async () => {
+    try {
+      const res = await fetch(`/api/orders/${orderId}`)
+      if (!res.ok) {
+        throw new Error('Failed to fetch order details')
+      }
+      const data = await res.json()
+      setOrderData(data)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err))
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const { trigger: deliverOrder, isMutating: isDelivering } = useSWRMutation(
     `/api/orders/${orderId}`,
@@ -26,10 +40,13 @@ export default function OrderDetails({
           'Content-Type': 'application/json',
         },
       })
-      const data = await res.json()
-      res.ok
-        ? toast.success('Order delivered successfully')
-        : toast.error(data.message)
+      if(res.ok){
+        fetchOrderData()
+        toast.success('Order delivered successfully')
+      }
+      else{
+        toast.error("Error updating the product")
+      }
     }
   )
 
@@ -67,21 +84,6 @@ export default function OrderDetails({
 
   // Fetch order details using useEffect and fetch API
   useEffect(() => {
-    const fetchOrderData = async () => {
-      try {
-        const res = await fetch(`/api/orders/${orderId}`)
-        if (!res.ok) {
-          throw new Error('Failed to fetch order details')
-        }
-        const data = await res.json()
-        setOrderData(data)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : String(err))
-      } finally {
-        setLoading(false)
-      }
-    }
-
     fetchOrderData()
   }, [orderId])
 
