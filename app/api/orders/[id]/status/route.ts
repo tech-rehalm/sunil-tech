@@ -15,7 +15,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   try {
     const updatedOrder = await Order.findByIdAndUpdate(
       id,
-      { isPaid },
+      { isPaid, paidAt: Date.now().toString() },
       { new: true }
     );
 

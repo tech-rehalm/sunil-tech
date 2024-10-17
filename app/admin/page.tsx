@@ -104,7 +104,7 @@ export default function Page() {
         <div className="w-full md:w-[70%] rounded-xl flex flex-col items-center justify-center">
           <h1 className="text-3xl font-bold text-yellow-500">Sunil Tech</h1>
           <h1 className="text-xl font-bold text-yellow-500 my-4">Code of conduct and privacy policy</h1>
-          <p className="text-sm font-light text-center w-[80%] text-slate-400">Sunil tech store stands to provide technology devices and acesories.Ensuring delivery of high quality and affordable products.We stand not only to gain or make profit but also to promote the tech industry in making people's live easier.We strictl provide original branded products from the manufactures.Any unfair practice or service is handled by management to ensure the orgabization meet all legal standards.</p>
+          <p className="text-sm font-light text-center w-[80%] text-slate-400">Sunil tech store stands to provide technology devices and acesories.Ensuring delivery of high quality and affordable products.We stand not only to gain or make profit but also to promote the tech industry in making people's live easier.We strictly provide original branded products from the manufactures.Any unfair practice or service is handled by management to ensure the orgabization meet all legal standards.</p>
           <p className="font-bold text-slate-500 mt-8">&copy; SunilTech All Rights Reserved</p>
         </div>
       </div>

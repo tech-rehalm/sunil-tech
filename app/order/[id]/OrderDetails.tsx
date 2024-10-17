@@ -1,5 +1,6 @@
 'use client'
-import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
+import { useParams, useRouter } from 'next/navigation';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { OrderItem } from '@/models/OrderModel'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -15,6 +16,8 @@ export default function OrderDetails({
   orderId: string
   paypalClientId: string
 }) {
+  const params = useParams();
+  const router = useRouter();
 
   const fetchOrderData = async () => {
     try {
@@ -64,18 +67,23 @@ export default function OrderDetails({
     return order.id
   }
 
-  async function onApprovePayPalOrder(data: { orderID: string }) {
-    const response = await fetch(`/api/orders/${orderId}/capture-paypal-order`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    console.log(response);
-    
-    toast.success('Order paid successfully')
-  }
+  const updateOrderStatus = async () => {
+    try {
+      const response = await fetch(`/api/orders/${params.id}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ isPaid: true }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update order status');
+      }
+    } catch (err) {
+      setError('Failed to update order status');
+    }
+  };
 
   // State for managing the fetched order data any
   const [orderData, setOrderData] = useState<any>(null)
@@ -208,18 +216,37 @@ export default function OrderDetails({
                   </div>
                 </li>
 
-                {!isPaid && paymentMethod === 'PayPal' && (
-                  <li>
-                    <PayPalScriptProvider
-                      options={{ clientId: paypalClientId }}
-                    >
-                      <PayPalButtons
-                        createOrder={createPayPalOrder}
-                        onApprove={onApprovePayPalOrder}
-                      />
-                    </PayPalScriptProvider>
-                  </li>
-                )}
+                {!isPaid&& (
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold mb-4">Complete Your Payment</h2>
+          <PayPalScriptProvider options={{ "clientId": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || '' }}>
+            <PayPalButtons
+              createOrder={(data, actions) => {
+                return actions.order.create({
+                  intent: "CAPTURE", // Add the intent property
+                  purchase_units: [
+                    {
+                      amount: {
+                        currency_code: 'USD', // Ensure currency_code is provided
+                        value: totalPrice.toString(),
+                      },
+                    },
+                  ],
+                });
+              }}
+              onApprove={async (data, actions) => {
+                if (actions.order) {
+                  const details = await actions.order.capture();
+                  if (details.status === 'COMPLETED') {
+                    await updateOrderStatus();
+                    router.refresh()
+                  }
+                }
+              }}
+            />
+          </PayPalScriptProvider>
+        </div>
+      )}
                 {session?.user.isAdmin && (
                   <li>
                     <button

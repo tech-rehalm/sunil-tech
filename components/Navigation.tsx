@@ -1,15 +1,16 @@
 "use client"
+
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
-import { IoIosArrowDown } from "react-icons/io";
-import useCartService from '@/lib/hooks/useCartStore';
+import useCartService from '@/lib/hooks/useCartStore'
+import { Home, ShoppingBag, ShoppingCart, UserPlus, LogIn, User, ChevronDown, Settings, LogOut } from 'lucide-react'
 
 export default function Navigation() {
-  const {data: session}  = useSession()
-  const [menuOpen, setMenuOpen] = useState(false)
+  const { data: session } = useSession()
   const [mounted, setMounted] = useState(false)
   const { items } = useCartService()
+
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -19,45 +20,79 @@ export default function Navigation() {
   }
 
   return (
-    <div className='navbar justify-between bg-slate-900 z-30 text-yellow-500 pr-8 fixed top-0 mb-[80px]'>
-      <div className="text-lg font-bold">Sunny Tech Store</div>
-      <div className="flex gap-4">
-        <Link href="/" className='font-semibold rounded-xl transition duration-500 hover:bg-yellow-500 hover:text-black px-5 py-2 '>Home</Link>
-        <Link href="/shop" className='font-semibold rounded-xl transition duration-500 hover:bg-yellow-500 hover:text-black px-5 py-2 '>Shop</Link>
-        <Link href="/cart" className='font-semibold rounded-xl transition duration-500 hover:bg-yellow-500 hover:text-black px-5 py-2 '>Cart 
-        {mounted && items.length != 0 && (
-                <div className="badge badge-secondary">
-                  {items.reduce((a, c) => a + c.qty, 0)}{' '}
-                </div>
+    <div className="navbar bg-base-100 fixed top-0 z-30 shadow-md">
+      <div className="navbar-start">
+        <div className="dropdown">
+          <label tabIndex={0} className="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+          </label>
+          <ul tabIndex={0} className="menu menu-sm text-warning dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <li><Link href="/" className='text-warning bg-[lime]'><Home className="w-4 h-4 mr-2 " />Home</Link></li>
+            <li><Link href="/shop"><ShoppingBag className="w-4 h-4 mr-2 " />Shop</Link></li>
+            <li>
+              <Link href="/cart">
+                <ShoppingCart className="w-4 h-4 mr-2 " />
+                Cart
+                {mounted && items.length > 0 && (
+                  <span className="badge badge-sm badge-warning">{items.reduce((a, c) => a + c.qty, 0)}</span>
+                )}
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <Link href="/" className="btn btn-ghost normal-case text-xl">Sunny Tech Store</Link>
+      </div>
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">
+          <li><Link href="/"><Home className="w-4 h-4 mr-2" />Home</Link></li>
+          <li><Link href="/shop"><ShoppingBag className="w-4 h-4 mr-2" />Shop</Link></li>
+          <li>
+            <Link href="/cart">
+              <ShoppingCart className="w-4 h-4 mr-2" />
+              Cart
+              {mounted && items.length > 0 && (
+                <span className="badge badge-sm badge-warning ml-2">{items.reduce((a, c) => a + c.qty, 0)}</span>
               )}
-        </Link>
-        {!session?.user && (
+            </Link>
+          </li>
+        </ul>
+      </div>
+      <div className="navbar-end">
+        {!session?.user ? (
           <>
-          <Link href="/register" className='font-semibold rounded-xl transition duration-500 hover:bg-yellow-500 hover:text-black px-5 py-2 '>Register</Link>
-        <Link href="/signin" className='font-semibold rounded-xl transition duration-500 hover:bg-yellow-500 hover:text-black px-5 py-2 '>Sign in</Link>
+            <Link href="/register" className="btn btn-ghost btn-sm"><UserPlus className="w-4 h-4 mr-2" />Register</Link>
+            <Link href="/signin" className="btn btn-warning btn-sm"><LogIn className="w-4 h-4 mr-2" />Sign in</Link>
           </>
-        )}
-        {session?.user && (
-          <>
-          <div className="flex">
-            <button onClick={()=> setMenuOpen(!menuOpen)} className='font-semibold relative rounded-xl transition duration-500 hover:bg-yellow-500 hover:text-black px-5 py-2 flex text-lg'>
-              {session?.user.firstname}<IoIosArrowDown />
-              {menuOpen && (
-                <div className="absolute top-8 right-1 border border-yellow-500 p-4 w-[170px] flex flex-col gap-4 bg-slate-800 shadow-xl rounded-xl z-40 text-yellow-500">
-                  <Link className='font-semibold rounded-xl transition duration-500 hover:bg-yellow-500 bg-slate-700 hover:text-black px-5 py-2 flex text-lg w-full' href='/profile'>Profile</Link>
-                  {session?.user.isAdmin && (
-                    <Link className='font-semibold rounded-xl transition duration-500 hover:bg-yellow-500 bg-slate-700 hover:text-black px-5 py-2 flex text-lg w-full' href='/admin'>Admin</Link>
-                  )}
-                  <button onClick={signoutHandler} className='font-semibold rounded-xl transition duration-500 hover:bg-yellow-700 bg-yellow-500 text-black px-5 py-2 flex text-lg w-full'>Sign out</button>
-                </div>
+        ) : (
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="btn btn-warning btn-circle avatar">
+                <User />
+            </label>
+            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+              <li>
+                <Link href="/profile">
+                  <User className="w-4 h-4 mr-2" />
+                  Profile
+                </Link>
+              </li>
+              {session.user.isAdmin && (
+                <li>
+                  <Link href="/admin">
+                    <Settings className="w-4 h-4 mr-2" />
+                    Admin
+                  </Link>
+                </li>
               )}
-            </button>
-            
+              <li>
+                <a onClick={signoutHandler}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign out
+                </a>
+              </li>
+            </ul>
           </div>
-          </>
         )}
-        
       </div>
     </div>
   )
-} 
+}

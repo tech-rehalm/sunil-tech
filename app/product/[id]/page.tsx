@@ -1,149 +1,253 @@
-"use client";
+"use client"
 
-import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation"; // Use useParams from next/navigation
-import AddToCart from "@/components/AddToCart";
-import { convertDocToObj } from "@/lib/utils";
-import { useSession } from 'next-auth/react';
-import Rev from "@/components/Review";
+import React, { useEffect, useState } from "react"
+import { useParams } from "next/navigation"
+import { useSession } from 'next-auth/react'
+import { toast } from 'react-toastify'
+import { Star, ShoppingCart, Plus, Minus } from 'lucide-react'
+import { convertDocToObj } from "@/lib/utils"
+import AddToCart from "@/components/AddToCart"
 
 export interface Review {
-  _id: string;
-  name: string;
-  rating: number;
-  comment: string;
-  user: string;
+  _id: string
+  name: string
+  rating: number
+  comment: string
+  user: string
 }
 
-type Product = {
-  _id: string;
-  name: string;
-  model: string;
-  image: string;
-  price: number;
-  countInStock: number;
-  description: string;
-  category: { _id: string; name: string };
-  rating: number;
-  numReviews: number;
-  createdAt: string;
+export interface Category {
+  _id: string
+  name: string
+}
+
+export interface Product {
+  _id: string
+  name: string
+  image: string
+  model: string
+  category: Category
+  description: string
   reviews: Review[]
-};
+  rating: number
+  numReviews: number
+  price: number
+  countInStock: number
+  createdAt: string
+}
 
 export default function ProductPage() {
-  const { id } = useParams(); // Get the product ID from the URL
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const {data: session} = useSession()
+  const { id } = useParams()
+  const [product, setProduct] = useState<Product | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const { data: session } = useSession()
   const [disabled, setDisabled] = useState(false)
+  const [review, setReview] = useState<string>('')
+  const [rating, setRating] = useState<number>(0)
+  const [quantity, setQuantity] = useState(1)
 
-  const setDisabledState = async()=>{
-    const reviewed = product?.reviews.find((review)=>{
-      review.name === session?.user.firstname
-    })
-    if(reviewed){
+  const fetchProduct = async () => {
+    if (!id) return
+    try {
+      const response = await fetch(`/api/products/${id}`)
+      if (!response.ok) {
+        throw new Error("Failed to fetch product")
+      }
+      const data = await response.json()
+      setProduct(data.product)
+      setLoading(false)
+    } catch (err) {
+      console.error("Error fetching product:", err)
+      setError(err instanceof Error ? err.message : String(err))
+      setLoading(false)
+    }
+  }
+
+  const setDisabledState = () => {
+    if (!product || !session) return
+    const reviewed = product.reviews.find((review) => review.name === session.user.firstname)
+    if (reviewed) {
       setDisabled(true)
     }
   }
 
-
-  const fetchProduct = async () => {
-    if (!id) return; // Wait for `id` to be available
-    try {
-      const response = await fetch(`/api/products/${id}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch product");
-      }
-      const data = await response.json();
-      setProduct(data.product); // Set the fetched product data
-      setLoading(false);
-    } catch (err) {
-      console.error("Error fetching product:", err);
-      setError(err instanceof Error ? err.message : String(err));
-      setLoading(false);
-    }
-  };
   useEffect(() => {
     if (id) {
-      fetchProduct(); // Fetch product details when ID is available
+      fetchProduct()
     }
+  }, [id])
+
+  useEffect(() => {
     setDisabledState()
-  }, [id]);
+  }, [product, session])
+
+  const handleReviewSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!session) {
+      toast.error('You need to be logged in to submit a review.')
+      return
+    }
+
+    if (!product) return
+
+    try {
+      const res = await fetch(`/api/products/${product._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          reviews: [
+            ...product.reviews,
+            {
+              name: session.user.firstname,
+              rating,
+              comment: review,
+              user: session.user._id,
+            },
+          ],
+          numReviews: product.numReviews + 1,
+          rating: ((product.rating * product.numReviews) + rating) / (product.numReviews + 1),
+        }),
+      })
+
+      const data = await res.json()
+      if (res.ok) {
+        setProduct(data.product)
+        setReview('')
+        setRating(0)
+        toast.success("Review added successfully")
+      } else {
+        toast.error("Failed to submit review: " + data.error)
+      }
+    } catch (error) {
+      toast.error("An error occurred while submitting the review")
+    }
+  }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="flex justify-center items-center h-screen">
+      <span className="loading loading-spinner loading-lg text-warning"></span>
+    </div>
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="alert alert-error">{error}</div>
   }
 
   if (!product) {
-    return <div>Product not found.</div>;
+    return <div className="alert alert-info">Product not found.</div>
   }
 
   return (
-    <div className="w-full min-h-screen p-8">
-      <div className="flex flex-col md:flex-row w-full">
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-col lg:flex-row gap-8">
         {/* Product Image */}
-        <div className="w-full md:w-1/2 flex justify-center ">
-          <img src={product.image} alt={product.name} className="w-[500px] h-[500px] object-cover rounded-xl" />
+        <div className="lg:w-1/2">
+          <img src={product.image} alt={product.name} className="w-full h-auto object-cover rounded-xl shadow-lg" />
         </div>
 
         {/* Product Details */}
-        <div className="w-full md:w-[50%] p-4 md:ml-[200px] ">
-          <h1 className="text-4xl font-bold">Name: <span className="text-yellow-500">{product.name}</span></h1>
-          <p className="text-2xl">Model: <span className="text-yellow-500">{product.model}</span></p>
-          <p className="text-lg">Category: <span className="text-yellow-500">{product.category.name}</span></p>
-          <p className="text-2xl font-semibold my-6">Price: ${product.price}</p>
-          <p className="text-xl">Count In Stock: <span className="text-yellow-500">{product.countInStock}</span></p>
-          <p className="mt-4 text-xl"><span className="text-yellow-500">{product.description}</span></p>
+        <div className="lg:w-1/2 space-y-6">
+          <h1 className="text-3xl font-bold text-warning">{product.name}</h1>
+          <p className="text-xl">Model: <span className="text-warning">{product.model}</span></p>
+          <p className="text-lg">Category: <span className="badge badge-warning">{product.category.name}</span></p>
+          <p className="text-2xl font-semibold">Price: <span className="text-warning">${product.price.toFixed(2)}</span></p>
+          <p className="text-lg">In Stock: <span className="text-warning">{product.countInStock}</span></p>
+          <p className="text-gray-400">{product.description}</p>
 
-          <div className="mt-6 flex w-full">
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold">Rating:</span> <span className="text-yellow-500">{product.rating}</span>
-            <p>{product.numReviews} Reviews</p>
-            </div>
-            <div className="my-5">
-          {product.countInStock !== 0 && (
-                <div className="card-actions w-full ml-[100px] justify-center ">
-                  <AddToCart
-                    item={{
-                      ...convertDocToObj(product),
-                      qty: 0,
-                    }}
-                  />
-                </div>
-              )}
-        </div>
-          </div>
-          <p className="text-sm text-yellow-500 my-3">{product.description}</p>
-        </div>
-      </div>
-      <Rev product={product} setProduct={setProduct} session={session} disabled={disabled}/>
-      <span className="divider"></span>
-      
-      <div className='w-full flex flex-col'>
-          <h2 className='my-2 text-2xl font-extrabold bg-gradient-to-bl rounded-xl from-[aqua] to-[lime] bg-clip-text text-transparent'>Reviews</h2> <br />
-          {product.reviews.length === 0 ? (
-            <p className="text-3xl my-4">No reviews yet.</p>
-          ) : (
-            <ul className='w-full flex flex-col'>
-              <h1 className="text-3xl my-3 font-bold text-yellow-500 opacity-75">Latest Product reviews</h1>
-              <div className="flex flex-col md:flex-row">
-                {product.reviews.map((review: Review) => (
-                <li key={review._id} className='w-[300px] flex flex-col p-3 rounded-xl shadow-md shadow-yellow-500 m-4 font-bold'>
-                  <strong className="text-2xl font-bold opacity-50 my-2 text-yellow-500">{review.name}</strong>
-                  <p className="text-sm font-light opacity-75">{review.comment}</p>
-                  <p>Ratings: <span className="text-[lime]">{review.rating}</span> </p>
-                </li>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <Star
+                  key={star}
+                  className={`w-5 h-5 ${star <= product.rating ? 'text-warning fill-warning' : 'text-gray-300'}`}
+                />
               ))}
-              </div>
-              
-            </ul>
+            </div>
+            <span className="text-lg font-semibold">{product.rating.toFixed(1)}</span>
+            <span className="text-gray-600">({product.numReviews} reviews)</span>
+          </div>
+
+          {product.countInStock > 0 && (
+            <div className="flex items-center gap-4">
+              <AddToCart
+                      item={{
+                        ...convertDocToObj(product),
+                        qty: 0,
+                      }}
+                    />
+            </div>
           )}
         </div>
+      </div>
+
+      {/* Review Form */}
+      <div className="mt-12">
+        <h2 className="text-2xl font-bold text-warning mb-4">Write a Review</h2>
+        <form onSubmit={handleReviewSubmit} className="space-y-4">
+          <div>
+            <label className="label">
+              <span className="label-text text-lg">Rating</span>
+            </label>
+            <input
+              type="number"
+              min="1"
+              max="5"
+              value={rating}
+              onChange={(e) => setRating(parseInt(e.target.value))}
+              required
+              className="input input-bordered input-warning w-full max-w-xs"
+              placeholder="Rate from 1 to 5"
+            />
+          </div>
+          <div>
+            <label className="label">
+              <span className="label-text text-lg">Your Review</span>
+            </label>
+            <textarea
+              className="textarea textarea-warning w-full"
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+              required
+              placeholder="Share your thoughts about the product..."
+              rows={4}
+            ></textarea>
+          </div>
+          <button type="submit" disabled={disabled} className="btn btn-warning w-full">
+            Submit Review
+          </button>
+        </form>
+      </div>
+
+      {/* Reviews List */}
+      <div className="mt-12">
+        <h2 className="text-2xl font-bold text-warning mb-4">Customer Reviews</h2>
+        {product.reviews.length === 0 ? (
+          <p className="text-lg text-gray-600">No reviews yet.</p>
+        ) : (
+          <div className="space-y-4">
+            {product.reviews.map((review: Review) => (
+              <div key={review._id} className="card bg-base-100 shadow-xl">
+                <div className="card-body">
+                  <h3 className="card-title text-warning">{review.name}</h3>
+                  <div className="flex items-center mb-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        className={`w-4 h-4 ${star <= review.rating ? 'text-warning fill-warning' : 'text-gray-300'}`}
+                      />
+                    ))}
+                  </div>
+                  <p>{review.comment}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
-  );
+  )
 }

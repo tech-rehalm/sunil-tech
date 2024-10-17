@@ -1,7 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    eslint:{
+    eslint: {
         ignoreDuringBuilds: true
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'cdn.filestackcontent.com',
+                pathname: '/**'
+            }
+        ]
     }
 };
 
