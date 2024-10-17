@@ -57,6 +57,9 @@ export default function HomePage() {
     fetchProducts()
     fetchPromo()
   }, [])
+  console.log(products);
+  console.log(promo);
+  
 
   return (
     <div className="flex flex-col items-center">
