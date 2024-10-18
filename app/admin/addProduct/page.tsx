@@ -152,7 +152,7 @@ export default function ProductManagement() {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Manage Products</h1>
 
-      <div className="card bg-base-200 shadow-xl mb-8">
+      <div className="card bg-slate-900 shadow-xl mb-8">
         <div className="card-body">
           <h2 className="card-title mb-4">Create New Product</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -172,7 +172,7 @@ export default function ProductManagement() {
               <label className="label">
                 <span className="label-text">Category</span>
               </label>
-              <select name="category" className="select select-warning w-full" required>
+              <select name="category" className="select select-warning bg-slate-800 w-full" required>
                 <option value="">Select Category</option>
                 {categories.map((category) => (
                   <option key={category._id} value={category._id}>{category.name}</option>
@@ -185,28 +185,28 @@ export default function ProductManagement() {
                 <label className="label">
                   <span className="label-text">Product Name</span>
                 </label>
-                <input type="text" name="name" placeholder="Product Name" className="input input-warning" required />
+                <input type="text" name="name" placeholder="Product Name" className="input input-warning bg-slate-800" required />
               </div>
 
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Product Model</span>
                 </label>
-                <input type="text" name="model" placeholder="Product Model" className="input input-warning" required />
+                <input type="text" name="model" placeholder="Product Model" className="input input-warning bg-slate-800" required />
               </div>
 
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Product Price</span>
                 </label>
-                <input type="number" name="price" placeholder="Product Price" className="input input-warning" required />
+                <input type="number" name="price" placeholder="Product Price" className="input input-warning bg-slate-800" required />
               </div>
 
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Count in Stock</span>
                 </label>
-                <input type="number" name="countInStock" placeholder="Count in Stock" className="input input-warning" required />
+                <input type="number" name="countInStock" placeholder="Count in Stock" className="input input-warning bg-slate-800" required />
               </div>
             </div>
 
@@ -214,7 +214,7 @@ export default function ProductManagement() {
               <label className="label">
                 <span className="label-text">Description</span>
               </label>
-              <textarea name="description" placeholder="Description" className="textarea textarea-warning h-24" required></textarea>
+              <textarea name="description" placeholder="Description" className="textarea textarea-warning bg-slate-800 h-24" required></textarea>
             </div>
 
             <button type="submit" className="btn btn-warning w-full">
@@ -249,7 +249,7 @@ export default function ProductManagement() {
                       name="name"
                       value={product.name}
                       onChange={(e) => handleInputChange(e, product._id)}
-                      className="input input-warning input-sm"
+                      className="input input-warning bg-slate-800 input-sm"
                     />
                   ) : (
                     product.name
@@ -278,7 +278,7 @@ export default function ProductManagement() {
                       name="price"
                       value={product.price}
                       onChange={(e) => handleInputChange(e, product._id)}
-                      className="input input-warning input-sm"
+                      className="input input-warning bg-slate-800 input-sm"
                     />
                   ) : (
                     `$${product.price.toFixed(2)}`
@@ -291,7 +291,7 @@ export default function ProductManagement() {
                       name="countInStock"
                       value={product.countInStock}
                       onChange={(e) => handleInputChange(e, product._id)}
-                      className="input input-warning input-sm"
+                      className="input input-warning bg-slate-800 input-sm"
                     />
                   ) : (
                     product.countInStock

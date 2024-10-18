@@ -71,7 +71,7 @@ const Form = () => {
     }
   }
   return (
-    <div className="max-w-sm  mx-auto card bg-base-300 my-4">
+    <div className="max-w-sm  mx-auto card bg-slate-900 my-4">
       <div className="card-body">
         <h1 className="card-title text-yellow-500">Profile</h1>
         <form onSubmit={handleSubmit(formSubmit)}>
@@ -85,7 +85,7 @@ const Form = () => {
               {...register('firstname', {
                 required: 'Name is required',
               })}
-              className="input input-bordered w-full max-w-sm"
+              className="input input-bordered bg-slate-800 w-full max-w-sm"
             />
             {errors.firstname?.message && (
               <div className="text-error">{errors.firstname.message}</div>
@@ -105,7 +105,7 @@ const Form = () => {
                   message: 'Email is invalid',
                 },
               })}
-              className="input input-bordered w-full max-w-sm"
+              className="input input-bordered bg-slate-800 w-full max-w-sm"
             />
             {errors.email?.message && (
               <div className="text-error">{errors.email.message}</div>
@@ -119,7 +119,7 @@ const Form = () => {
               type="password"
               id="password"
               {...register('password', {})}
-              className="input input-bordered w-full max-w-sm"
+              className="input input-bordered bg-slate-800 w-full max-w-sm"
             />
             {errors.password?.message && (
               <div className="text-error">{errors.password.message}</div>
@@ -138,7 +138,7 @@ const Form = () => {
                   return password === value || 'Passwords should match!'
                 },
               })}
-              className="input input-bordered w-full max-w-sm"
+              className="input input-bordered bg-slate-800 w-full max-w-sm"
             />
             {errors.confirmPassword?.message && (
               <div className="text-error">{errors.confirmPassword.message}</div>

@@ -103,7 +103,7 @@ export default function Page() {
               placeholder="Search products"
               value={searchQuery}
               onChange={handleSearch}
-              className="input input-bordered input-warning w-full pr-10"
+              className="input input-bordered input-warning bg-slate-900 w-full pr-10"
             />
             <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-warning" />
           </div>
@@ -116,9 +116,9 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row ">
         <div className={`md:w-1/4 md:pr-4 ${isFilterOpen ? 'block' : 'hidden md:block'}`}>
-          <div className="bg-base-200 p-4 rounded-lg shadow-md">
+          <div className="bg-slate-950 p-4 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">Categories</h2>
             <div className="space-y-2">
               <button
@@ -158,7 +158,7 @@ export default function Page() {
 
 function ProductCard({ product }: { product: Product }) {
   return (
-    <div className="card bg-base-100 shadow-xl">
+    <div className="card bg-slate-900 shadow-xl">
       <Link href={`/product/${product._id}`} className="px-4 pt-4">
         <img src={product.image} alt={product.name} className="rounded-xl object-cover h-48 w-full" />
       </Link>

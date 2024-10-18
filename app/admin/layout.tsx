@@ -43,7 +43,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <input id="admin-drawer" type="checkbox" className="drawer-toggle" checked={isMobileMenuOpen} onChange={toggleMobileMenu} />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="w-full navbar bg-base-300 lg:hidden">
+        <div className="w-full navbar bg-slate-900 lg:hidden">
           <div className="flex-none">
             <label htmlFor="admin-drawer" className="btn btn-square btn-ghost">
               <Menu className="w-6 h-6" />
@@ -60,7 +60,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </div> 
       <div className="drawer-side z-40">
         <label htmlFor="admin-drawer" className="drawer-overlay"></label> 
-        <aside className="w-64 bg-base-200 text-base-content h-full">
+        <aside className="w-64 bg-slate-900 text-base-content h-full">
           <div className="p-4 flex justify-between items-center lg:hidden">
             <span className="text-xl font-bold">Menu</span>
             <button onClick={toggleMobileMenu} className="btn btn-square btn-ghost">

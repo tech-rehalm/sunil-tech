@@ -72,7 +72,7 @@ const Form = () => {
 
       <div className="grid md:grid-cols-4 md:gap-5 my-4">
         <div className="overflow-x-auto md:col-span-3">
-          <div className="card bg-base-300">
+          <div className="card bg-slate-900">
             <div className="card-body">
               <h2 className="card-title">Shipping Address</h2>
               <p>{shippingAddress.fullName}</p>
@@ -81,26 +81,26 @@ const Form = () => {
                 {shippingAddress.postalCode}, {shippingAddress.country}{' '}
               </p>
               <div>
-                <Link className="btn" href="/shipping">
+                <Link className="btn btn-warning" href="/shipping">
                   Edit
                 </Link>
               </div>
             </div>
           </div>
 
-          <div className="card bg-base-300 mt-4">
+          <div className="card bg-slate-900 mt-4">
             <div className="card-body">
               <h2 className="card-title">Payment Method</h2>
               <p>{paymentMethod}</p>
               <div>
-                <Link className="btn" href="/payment">
+                <Link className="btn btn-warning" href="/payment">
                   Edit
                 </Link>
               </div>
             </div>
           </div>
 
-          <div className="card bg-base-300 mt-4">
+          <div className="card bg-slate-900 mt-4">
             <div className="card-body">
               <h2 className="card-title">Items</h2>
               <table className="table">
@@ -139,7 +139,7 @@ const Form = () => {
                 </tbody>
               </table>
               <div>
-                <Link className="btn" href="/cart">
+                <Link className="btn btn-warning" href="/cart">
                   Edit
                 </Link>
               </div>
@@ -148,7 +148,7 @@ const Form = () => {
         </div>
 
         <div>
-          <div className="card bg-base-300">
+          <div className="card bg-slate-900">
             <div className="card-body">
               <h2 className="card-title">Order Summary</h2>
               <ul className="space-y-3">

@@ -58,7 +58,7 @@ export default function Products() {
         <ShoppingBag className="mr-2" />
         All Products
       </h1>
-      <div className="card bg-base-100 shadow-xl">
+      <div className="card bg-slate-900 shadow-xl">
         <div className="card-body">
           <div className="overflow-x-auto">
             <table className="table table-zebra w-full">
@@ -75,7 +75,7 @@ export default function Products() {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product) => (
+                {products?.map((product) => (
                   <tr key={product._id}>
                     <td>
                       <div className="avatar">

@@ -96,38 +96,38 @@ export default function AdminDashboard() {
       <h1 className="text-3xl font-bold text-warning mb-8">Admin Dashboard</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="stat bg-base-200 shadow">
+        <div className="stat bg-slate-900 shadow">
           <div className="stat-figure text-warning">
             <Package size={36} />
           </div>
           <div className="stat-title">Total Products</div>
-          <div className="stat-value text-warning">{products.length}</div>
+          <div className="stat-value text-warning">{products?.length}</div>
         </div>
-        <div className="stat bg-base-200 shadow">
+        <div className="stat bg-slate-900 shadow">
           <div className="stat-figure text-warning">
             <ShoppingCart size={36} />
           </div>
           <div className="stat-title">Total Orders</div>
-          <div className="stat-value text-warning">{orders.length}</div>
+          <div className="stat-value text-warning">{orders?.length}</div>
         </div>
-        <div className="stat bg-base-200 shadow">
+        <div className="stat bg-slate-900 shadow">
           <div className="stat-figure text-warning">
             <Users size={36} />
           </div>
           <div className="stat-title">Total Users</div>
-          <div className="stat-value text-warning">{users.length}</div>
+          <div className="stat-value text-warning">{users?.length}</div>
         </div>
-        <div className="stat bg-base-200 shadow">
+        <div className="stat bg-slate-900 shadow">
           <div className="stat-figure text-warning">
             <Layers size={36} />
           </div>
           <div className="stat-title">Categories</div>
-          <div className="stat-value text-warning">{categories.length}</div>
+          <div className="stat-value text-warning">{categories?.length}</div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        <div className="card bg-base-200 shadow-xl">
+        <div className="card bg-slate-900 shadow-xl">
           <div className="card-body">
             <h2 className="card-title text-warning mb-4">Sales Overview</h2>
             <ResponsiveContainer width="100%" height={300}>
@@ -143,7 +143,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="card bg-base-200 shadow-xl">
+        <div className="card bg-slate-900 shadow-xl">
           <div className="card-body">
             <h2 className="card-title text-warning mb-4">Recent Orders</h2>
             <div className="overflow-x-auto">
@@ -177,21 +177,21 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <div className="stat bg-base-200 shadow">
+        <div className="stat bg-slate-900 shadow">
           <div className="stat-figure text-warning">
             <DollarSign size={36} />
           </div>
           <div className="stat-title">Total Revenue</div>
           <div className="stat-value text-warning">${totalRevenue.toFixed(2)}</div>
         </div>
-        <div className="stat bg-base-200 shadow">
+        <div className="stat bg-slate-900 shadow">
           <div className="stat-figure text-warning">
             <ShoppingCart size={36} />
           </div>
           <div className="stat-title">Average Order Value</div>
           <div className="stat-value text-warning">${averageOrderValue.toFixed(2)}</div>
         </div>
-        <div className="stat bg-base-200 shadow">
+        <div className="stat bg-slate-900 shadow">
           <div className="stat-figure text-warning">
             <Package size={36} />
           </div>
@@ -200,7 +200,7 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <div className="card bg-base-200 shadow-xl">
+      <div className="card bg-slate-900 shadow-xl">
         <div className="card-body">
           <h2 className="card-title text-warning mb-4">Sunil Tech</h2>
           <h3 className="text-lg font-semibold mb-2">Code of Conduct and Privacy Policy</h3>

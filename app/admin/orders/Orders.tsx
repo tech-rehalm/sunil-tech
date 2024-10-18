@@ -48,7 +48,7 @@ export default function Orders() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6 text-warning">Orders</h1>
-      <div className="card bg-base-100 shadow-xl">
+      <div className="card bg-slate-900 shadow-xl">
         <div className="card-body">
           <div className="overflow-x-auto">
             <table className="table table-zebra w-full">

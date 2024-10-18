@@ -71,7 +71,7 @@ const Form = () => {
                   message: 'Email is invalid',
                 },
               })}
-              className="input input-bordered input-warning w-full max-w-sm"
+              className="input input-bordered bg-slate-800 input-warning w-full max-w-sm"
             />
             {errors.email?.message && (
               <div className="text-error">{errors.email.message}</div>
@@ -87,7 +87,7 @@ const Form = () => {
               {...register('password', {
                 required: 'Password is required',
               })}
-              className="input input-bordered input-warning w-full max-w-sm"
+              className="input input-bordered bg-slate-800 input-warning w-full max-w-sm"
             />
             {errors.password?.message && (
               <div className="text-error">{errors.password.message}</div>

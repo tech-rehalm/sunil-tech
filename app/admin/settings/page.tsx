@@ -133,7 +133,7 @@ export default function Settings() {
         <a className={`tab ${activeTab === 'products' ? 'tab-active' : ''}`} onClick={() => setActiveTab('products')}>Products</a>
       </div>
       {activeTab === 'users' && (
-        <div className="card bg-base-100 shadow-xl">
+        <div className="card bg-slate-900 shadow-xl">
           <div className="card-body">
             <h2 className="card-title text-warning">All Users</h2>
             <div className="overflow-x-auto">
@@ -179,7 +179,7 @@ export default function Settings() {
         </div>
       )}
       {activeTab === 'orders' && (
-        <div className="card bg-base-100 shadow-xl">
+        <div className="card bg-slate-900 shadow-xl">
           <div className="card-body">
             <h2 className="card-title text-warning">All Orders</h2>
             <div className="overflow-x-auto">
@@ -234,7 +234,7 @@ export default function Settings() {
         </div>
       )}
       {activeTab === 'products' && (
-        <div className="card bg-base-100 shadow-xl">
+        <div className="card bg-slate-900 shadow-xl">
           <div className="card-body">
             <h2 className="card-title text-warning">All Products</h2>
             <div className="overflow-x-auto">

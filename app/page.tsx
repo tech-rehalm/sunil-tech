@@ -84,21 +84,21 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Why Choose Us</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="card bg-base-100 shadow-xl">
+            <div className="card bg-slate-900 shadow-xl">
               <div className="card-body items-center text-center">
                 <Truck className="w-12 h-12 text-warning mb-4" />
                 <h3 className="card-title">Free Shipping</h3>
                 <p>On orders over $100</p>
               </div>
             </div>
-            <div className="card bg-base-100 shadow-xl">
+            <div className="card bg-slate-900 shadow-xl">
               <div className="card-body items-center text-center">
                 <Clock className="w-12 h-12 text-warning mb-4" />
                 <h3 className="card-title">24/7 Support</h3>
                 <p>Always here to help</p>
               </div>
             </div>
-            <div className="card bg-base-100 shadow-xl">
+            <div className="card bg-slate-900 shadow-xl">
               <div className="card-body items-center text-center">
                 <Box className="w-12 h-12 text-warning mb-4" />
                 <h3 className="card-title">Easy Returns</h3>
@@ -114,7 +114,7 @@ export default function HomePage() {
         <h2 className="text-3xl font-bold mb-8 text-center">Latest Products</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products?.map((product) => (
-            <div key={product._id} className="card bg-base-100 shadow-xl">
+            <div key={product._id} className="card bg-slate-900 shadow-xl">
               <figure><img src={product.image} alt={product.name} className="h-48 w-full object-cover" /></figure>
               <div className="card-body">
                 <h2 className="card-title text-warning">{product.name}</h2>
@@ -134,10 +134,10 @@ export default function HomePage() {
 
       {/* Promotional Product Section */}
       {promo && (
-        <div className="bg-base-200 w-full py-12">
+        <div className="bg-state-800 w-full py-12">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold mb-8 text-center">Special Offer</h2>
-            <div className="card lg:card-side bg-base-100 shadow-xl">
+            <div className="card lg:card-side bg-slate-900 shadow-xl">
               <figure className="lg:w-1/2"><img src={promo.image} alt={promo.name} className="h-full w-full object-cover" /></figure>
               <div className="card-body lg:w-1/2">
                 <h2 className="card-title text-warning text-3xl">{promo.name}</h2>
@@ -157,8 +157,8 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="text-3xl font-bold text-warning">${(promo.price * 0.8).toFixed(2)}</span>
-                  <span className="text-xl line-through opacity-50">${promo.price.toFixed(2)}</span>
+                  <span className="md:text-3xl font-bold text-warning">${(promo.price * 0.8).toFixed(2)}</span>
+                  <span className="md:text-xl line-through opacity-50">${promo.price.toFixed(2)}</span>
                   <span className="badge badge-error">20% OFF</span>
                 </div>
                 <div className="card-actions justify-end mt-6">

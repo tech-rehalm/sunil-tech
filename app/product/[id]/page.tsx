@@ -199,7 +199,7 @@ export default function ProductPage() {
               value={rating}
               onChange={(e) => setRating(parseInt(e.target.value))}
               required
-              className="input input-bordered input-warning w-full max-w-xs"
+              className="input input-bordered input-warning bg-slate-900 w-full max-w-xs"
               placeholder="Rate from 1 to 5"
             />
           </div>
@@ -208,7 +208,7 @@ export default function ProductPage() {
               <span className="label-text text-lg">Your Review</span>
             </label>
             <textarea
-              className="textarea textarea-warning w-full"
+              className="textarea textarea-warning bg-slate-900 w-full"
               value={review}
               onChange={(e) => setReview(e.target.value)}
               required

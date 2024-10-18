@@ -16,7 +16,7 @@ export default function Page() {
 
   if (!mounted) return <></>
   return (
-    <div className='w-full min-h-screen p-10'>
+    <div className='w-full min-h-screen p-10 '>
       {items.length === 0 ? (
         <h1 className="text-3xl font-extrabold">Your cart is empty go <Link href="/shop" className='underline'>shopping</Link></h1>
       ): (
@@ -68,15 +68,13 @@ export default function Page() {
     </tbody>
   </table>
 </div>
-        </div>
-      )}
-      <div>
-            <div className="card bg-base-300">
+<div>
+            <div className="card bg-slate-900">
               <div className="card-body">
                 <ul>
                   <li>
                     <div className="pb-3 text-xl">
-                      Subtotal ({items.reduce((a, c) => a + c.qty, 0)}) : $
+                      Subtotal  ({items.reduce((a, c) => a + c.qty, 0)}) : $
                       {itemsPrice}
                     </div>
                   </li>
@@ -92,6 +90,9 @@ export default function Page() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
     </div>
   )
 }
