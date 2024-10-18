@@ -5,7 +5,7 @@ import Product from "../../../../models/ProductModel";
 export async function GET() {
   try {
     await connectDB();
-    const products = await Product.find().sort({ createdAt: -1 }).limit(4).populate('category')
+    const products = await Product.find().sort({ createdAt: -1 }).limit(4)
     return NextResponse.json({ products }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 500 });

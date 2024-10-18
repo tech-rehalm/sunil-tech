@@ -5,7 +5,7 @@ import Product from "../../../models/ProductModel";
 export async function GET() {
   try {
     await connectDB();
-    const product = await Product.findOne({onPromotion: true}).populate('category');
+    const product = await Product.findOne({onPromotion: true})
     return NextResponse.json({ product }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 500 });

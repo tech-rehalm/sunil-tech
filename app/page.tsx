@@ -34,7 +34,7 @@ export default function HomePage() {
   const fetchProducts = async () => {
     try {
       const response = await fetch('/api/products/latest')
-      if (!response.ok) throw new Error('Failed to fetch products')
+      if (!response.ok) console.log('Failed to fetch products')
       const data = await response.json()
       setProducts(data.products as Product[])
     } catch (error) {
@@ -45,7 +45,7 @@ export default function HomePage() {
   const fetchPromo = async () => {
     try {
       const response = await fetch('/api/promo')
-      if (!response.ok) throw new Error('Failed to fetch promo product')
+      if (!response.ok) console.log('Failed to fetch promo product')
       const data = await response.json()
       setPromo(data.product as Product)
     } catch (error) {
@@ -54,6 +54,10 @@ export default function HomePage() {
   }
 
   useEffect(() => {
+    fetchProducts()
+    fetchPromo()
+    fetchProducts()
+    fetchPromo()
     fetchProducts()
     fetchPromo()
   }, [])
