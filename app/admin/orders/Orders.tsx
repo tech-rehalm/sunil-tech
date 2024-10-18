@@ -51,7 +51,7 @@ export default function Orders() {
       <div className="card bg-slate-900 shadow-xl">
         <div className="card-body">
           <div className="overflow-x-auto">
-            <table className="table table-zebra w-full">
+            <table className="table  w-full">
               <thead>
                 <tr>
                   <th>ID</th>

@@ -137,7 +137,7 @@ export default function Settings() {
           <div className="card-body">
             <h2 className="card-title text-warning">All Users</h2>
             <div className="overflow-x-auto">
-              <table className="table table-zebra w-full">
+              <table className="table  w-full">
                 <thead>
                   <tr>
                     <th>User ID</th>
@@ -183,7 +183,7 @@ export default function Settings() {
           <div className="card-body">
             <h2 className="card-title text-warning">All Orders</h2>
             <div className="overflow-x-auto">
-              <table className="table table-zebra w-full">
+              <table className="table  w-full">
                 <thead>
                   <tr>
                     <th>Order ID</th>
@@ -238,7 +238,7 @@ export default function Settings() {
           <div className="card-body">
             <h2 className="card-title text-warning">All Products</h2>
             <div className="overflow-x-auto">
-              <table className="table table-zebra w-full">
+              <table className="table  w-full">
                 <thead>
                   <tr>
                     <th>Image</th>

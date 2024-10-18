@@ -74,13 +74,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   href={link.href} 
                   className={`flex items-center p-2 rounded-lg ${
                     pathname === link.href 
-                      ? "bg-warning text-warning-content" 
+                      ? "bg-warning text-black" 
                       : "hover:bg-base-300"
                   }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.icon}
-                  <span className="ml-3">{link.title}</span>
+                  <span className="ml-3 text-gray-300">{link.title}</span>
                 </Link>
               </li>
             ))}

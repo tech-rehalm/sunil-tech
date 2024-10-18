@@ -61,7 +61,7 @@ export default function Products() {
       <div className="card bg-slate-900 shadow-xl">
         <div className="card-body">
           <div className="overflow-x-auto">
-            <table className="table table-zebra w-full">
+            <table className="table  w-full">
               <thead>
                 <tr>
                   <th><Image className="w-4 h-4" /></th>

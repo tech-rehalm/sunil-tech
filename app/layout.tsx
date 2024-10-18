@@ -35,7 +35,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
 
-        <div className="w-full min-h-screen bg-slate-800">
+        <div className="w-full min-h-screen bg-slate-800 text-gray-300">
           <Providers>
             <ToastContainer/>
             <Navigation/>
