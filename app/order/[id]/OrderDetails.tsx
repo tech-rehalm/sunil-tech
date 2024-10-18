@@ -115,7 +115,7 @@ export default function OrderDetails({
 
   return (
     <div className='p-8'>
-      <h1 className="text-2xl py-4 text-yellow-500">Order {orderId}</h1>
+      <h1 className="text-2xl py-4 text-yellow-500">Complete your order</h1>
       <div className="grid md:grid-cols-4 md:gap-5 my-4">
         <div className="md:col-span-3">
           <div className="card bg-slate-900">
@@ -186,7 +186,7 @@ export default function OrderDetails({
           </div>
         </div>
 
-        <div>
+        <div className=' mb-4'>
           <div className="card bg-slate-900">
             <div className="card-body">
               <h2 className="card-title text-yellow-500">Order Summary</h2>
@@ -239,7 +239,7 @@ export default function OrderDetails({
                   const details = await actions.order.capture();
                   if (details.status === 'COMPLETED') {
                     await updateOrderStatus();
-                    router.refresh()
+                    fetchOrderData()
                   }
                 }
               }}

@@ -106,7 +106,7 @@ export default function Orders() {
                         </div>
                       ) : (
                         <div className="badge badge-error gap-2">
-                          <Truck className="w-4 h-4" />
+                          <Truck className="w-4 h-4 hidden md:block" />
                           Not delivered
                         </div>
                       )}
@@ -114,7 +114,7 @@ export default function Orders() {
                     <td>
                       <Link href={`/order/${order._id}`} passHref>
                         <button className="btn btn-warning btn-sm">
-                          <Eye className="w-4 h-4 mr-2" />
+                          <Eye className="w-4 h-4 mr-2 hidden md:block" />
                           Details
                         </button>
                       </Link>

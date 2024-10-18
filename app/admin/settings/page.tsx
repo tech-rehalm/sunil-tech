@@ -159,14 +159,14 @@ export default function Settings() {
                           className="btn btn-warning btn-sm mr-2"
                           onClick={() => handleChangeRole(user._id, user.isAdmin)}
                         >
-                          <ShieldCheck className="w-4 h-4 mr-1" />
+                          <ShieldCheck className="w-4 h-4 mr-1 hidden md:block" />
                           Change Role
                         </button>
                         <button
                           className="btn btn-error btn-sm"
                           onClick={() => handleDeleteUser(user._id)}
                         >
-                          <Trash2 className="w-4 h-4 mr-1" />
+                          <Trash2 className="w-4 h-4 mr-1 hidden md:block" />
                           Delete
                         </button>
                       </td>
@@ -205,7 +205,7 @@ export default function Settings() {
                         <span className={`badge ${order.isPaid ? 'badge-success' : 'badge-error'} mr-2 mb-2`}>
                           {order.isPaid ? 'Paid' : 'Not Paid'}
                         </span>
-                        <span className={`badge ${order.isDelivered ? 'badge-success' : 'badge-error'}`}>
+                        <span className={`badge flex ${order.isDelivered ? 'badge-success' : 'badge-error'}`}>
                           {order.isDelivered ? 'Delivered' : 'Not Delivered'}
                         </span>
                       </td>
@@ -221,7 +221,7 @@ export default function Settings() {
                           className="btn btn-warning btn-sm"
                           onClick={() => handleOrderStatus(order._id, 'isDelivered', order.isDelivered)}
                         >
-                          <Truck className="w-4 h-4 mr-1" />
+                          <Truck className="w-4 h-4 mr-1 hidden md:block" />
                           Toggle Delivery
                         </button>
                       </td>
@@ -271,10 +271,10 @@ export default function Settings() {
                       </td>
                       <td>
                         <button
-                          className="btn btn-warning btn-sm mr-2"
+                          className="btn btn-warning btn-sm mr-2 flex"
                           onClick={() => handlePromote(product._id, product.onPromotion)}
                         >
-                          <Tag className="w-4 h-4 mr-1" />
+                          <Tag className="w-4 h-4 mr-1 hidden md:block" />
                           Toggle Promotion
                         </button>
                         <button className="btn btn-warning btn-sm">
